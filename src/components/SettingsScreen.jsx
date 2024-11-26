@@ -15,14 +15,8 @@ const SettingsScreen = () => {
   const [selectedDurations, setSelectedDurations] = useState([]);
 
   const colorPalette = [
-    '#c8b2d6', // Original purple
-    '#f1dbbc', // Original beige
-    '#bcd2f1', // Original blue
-    '#d6b2c8', // Dusty rose
-    '#b2d6c8', // Sage green
-    '#dbbcf1', // Lavender
-    '#bcf1db', // Mint
-    '#f1bcdb'  // Pink
+    '#c8b2d6', '#f1dbbc', '#bcd2f1', '#d6b2c8', 
+    '#b2d6c8', '#dbbcf1', '#bcf1db', '#f1bcdb'
   ];
 
   const durations = [5, 10, 15, 20, 30, 45, 90];
@@ -30,18 +24,16 @@ const SettingsScreen = () => {
   const handleAddActivity = () => {
     if (newActivity.trim()) {
       const id = newActivity.toLowerCase().replace(/\s+/g, '-');
-      setActivities([
-        ...activities,
-        { id, name: newActivity, color: selectedColor }
-      ]);
+      setActivities([...activities, { id, name: newActivity, color: selectedColor }]);
       setNewActivity('');
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 3000);
+      setSelectedColor(colorPalette[0]);
+      showFeedback('Activity added successfully!');
     }
   };
 
   const handleDeleteActivity = (idToDelete) => {
     setActivities(activities.filter(activity => activity.id !== idToDelete));
+    showFeedback('Activity deleted');
   };
 
   const handleUpdateColor = (id, newColor) => {
@@ -62,40 +54,47 @@ const SettingsScreen = () => {
     }
   };
 
+  const showFeedback = (message) => {
+    setShowAlert(message);
+    setTimeout(() => setShowAlert(false), 2000);
+  };
+
   const handleSaveSettings = () => {
-    console.log('Saving settings:', {
-      activities,
-      selectedDurations
-    });
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 3000);
+    if (selectedDurations.length === 3) {
+      console.log('Saving settings:', { activities, selectedDurations });
+      showFeedback('Settings saved successfully!');
+    } else {
+      showFeedback('Please select exactly 3 durations');
+    }
   };
 
   return (
     <div className="settings-container">
       <div className="settings-card">
-        <div className="settings-header">
-          <h1 className="settings-title">Activity Settings</h1>
-        </div>
-        <div className="settings-content">
-          {/* Add new activity section */}
-          <div className="new-activity-section">
-            <h3 className="section-title">Add New Activity</h3>
-            <div className="new-activity-form">
-              <div className="form-group">
-                <label>Activity Name</label>
-                <input
-                  type="text"
-                  value={newActivity}
-                  onChange={(e) => setNewActivity(e.target.value)}
-                  placeholder="Enter activity name"
-                />
-              </div>
-              <div className="form-group">
-                <label>Color</label>
+        <header className="settings-header">
+          <h1 className="settings-title">Settings</h1>
+        </header>
+
+        <main className="settings-content">
+          <section className="new-activity-section">
+            <h2 className="section-title">Add Activity</h2>
+            <form className="new-activity-form" onSubmit={(e) => {
+              e.preventDefault();
+              handleAddActivity();
+            }}>
+              <input
+                type="text"
+                value={newActivity}
+                onChange={(e) => setNewActivity(e.target.value)}
+                placeholder="Activity name"
+                className="activity-input"
+                maxLength={20}
+              />
+              <div className="color-select-wrapper">
                 <select
                   value={selectedColor}
                   onChange={(e) => setSelectedColor(e.target.value)}
+                  className="color-select"
                   style={{ backgroundColor: selectedColor }}
                 >
                   {colorPalette.map((color) => (
@@ -104,25 +103,28 @@ const SettingsScreen = () => {
                       value={color} 
                       style={{ backgroundColor: color }}
                     >
-                      {'\u00A0'.repeat(10)}
+                      {'\u00A0'}
                     </option>
                   ))}
                 </select>
               </div>
               <button
+                type="submit"
                 className="add-button"
-                onClick={handleAddActivity}
                 disabled={!newActivity.trim()}
+                aria-label="Add activity"
               >
-                <Plus size={16} />
-                Add
+                <Plus size={20} />
+                <span>Add</span>
               </button>
-            </div>
-          </div>
+            </form>
+          </section>
 
-          {/* Existing activities list */}
-          <div className="existing-activities">
-            <h3 className="section-title">Existing Activities</h3>
+          <section className="activities-section">
+            <h2 className="section-title">
+              Your Activities
+              <span className="scroll-hint">(scroll to see more)</span>
+            </h2>
             <div className="activities-list">
               {activities.map((activity) => (
                 <div key={activity.id} className="activity-item">
@@ -137,7 +139,9 @@ const SettingsScreen = () => {
                     <select
                       value={activity.color}
                       onChange={(e) => handleUpdateColor(activity.id, e.target.value)}
+                      className="color-select"
                       style={{ backgroundColor: activity.color }}
+                      aria-label="Select color"
                     >
                       {colorPalette.map((color) => (
                         <option 
@@ -145,61 +149,60 @@ const SettingsScreen = () => {
                           value={color} 
                           style={{ backgroundColor: color }}
                         >
-                          {'\u00A0'.repeat(10)}
+                          {'\u00A0'}
                         </option>
                       ))}
                     </select>
                     <button
                       className="delete-button"
                       onClick={() => handleDeleteActivity(activity.id)}
+                      aria-label="Delete activity"
                     >
-                      <X size={16} />
+                      <X size={20} />
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Duration selection */}
-          <div className="duration-section">
-            <h3 className="section-title">Session Durations</h3>
+          <section className="duration-section">
+            <h2 className="section-title">Session Lengths</h2>
             <p className="duration-help">
-              Choose your session lengths. {selectedDurations.length}/3 selected.
+              Select 3 options ({selectedDurations.length}/3)
             </p>
-            <div className="duration-buttons">
+            <div className="duration-grid">
               {durations.map((duration) => (
                 <button
                   key={duration}
                   onClick={() => handleDurationClick(duration)}
                   className={`duration-button ${
                     selectedDurations.includes(duration) ? 'selected' : ''
-                  } ${
-                    selectedDurations.length === 3 && !selectedDurations.includes(duration)
-                      ? 'disabled'
-                      : ''
                   }`}
                   disabled={selectedDurations.length === 3 && !selectedDurations.includes(duration)}
+                  aria-pressed={selectedDurations.includes(duration)}
                 >
                   {duration}m
                 </button>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Save button */}
-          <button className="save-button" onClick={handleSaveSettings}>
-            <Save size={16} />
-            Save Deep Work Settings
+          <button 
+            className="save-button" 
+            onClick={handleSaveSettings}
+            disabled={selectedDurations.length !== 3}
+          >
+            <Save size={20} />
+            <span>Save Settings</span>
           </button>
+        </main>
 
-          {/* Success alert */}
-          {showAlert && (
-            <div className="success-alert">
-              Settings saved successfully!
-            </div>
-          )}
-        </div>
+        {showAlert && (
+          <div className="toast-message" role="alert">
+            {showAlert}
+          </div>
+        )}
       </div>
     </div>
   );
