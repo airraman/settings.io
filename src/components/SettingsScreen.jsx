@@ -76,50 +76,53 @@ const SettingsScreen = () => {
         </header>
 
         <main className="settings-content">
-          <section className="new-activity-section">
-            <h2 className="section-title">Add Activity</h2>
-            <form className="new-activity-form" onSubmit={(e) => {
-              e.preventDefault();
-              handleAddActivity();
-            }}>
-              <input
-                type="text"
-                value={newActivity}
-                onChange={(e) => setNewActivity(e.target.value)}
-                placeholder="Activity name"
-                className="activity-input"
-                maxLength={20}
-              />
-              <div className="color-select-wrapper">
-                <select
-                  value={selectedColor}
-                  onChange={(e) => setSelectedColor(e.target.value)}
-                  className="color-select"
-                  style={{ backgroundColor: selectedColor }}
-                >
-                  {colorPalette.map((color) => (
-                    <option 
-                      key={color} 
-                      value={color} 
-                      style={{ backgroundColor: color }}
-                    >
-                      {'\u00A0'}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="add-button"
-                disabled={!newActivity.trim()}
-                aria-label="Add activity"
-              >
-                <Plus size={20} />
-                <span>Add</span>
-              </button>
-            </form>
-          </section>
-
+        <section className="new-activity-section">
+  <h2 className="section-title">Add Activity</h2>
+  <form className="new-activity-form" onSubmit={(e) => {
+    e.preventDefault();
+    handleAddActivity();
+  }}>
+    <div className="input-container">
+      <input
+        type="text"
+        value={newActivity}
+        onChange={(e) => setNewActivity(e.target.value)}
+        placeholder="Activity name"
+        className="activity-input"
+        maxLength={20}
+      />
+    </div>
+    <div className="form-controls">
+      <div className="color-select-wrapper">
+        <select
+          value={selectedColor}
+          onChange={(e) => setSelectedColor(e.target.value)}
+          className="color-select"
+          style={{ backgroundColor: selectedColor }}
+        >
+          {colorPalette.map((color) => (
+            <option 
+              key={color} 
+              value={color} 
+              style={{ backgroundColor: color }}
+            >
+              {'\u00A0'}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        type="submit"
+        className="add-button"
+        disabled={!newActivity.trim()}
+        aria-label="Add activity"
+      >
+        <Plus size={20} />
+        <span>Add</span>
+      </button>
+    </div>
+  </form>
+</section>
           <section className="activities-section">
             <h2 className="section-title">
               Your Activities
