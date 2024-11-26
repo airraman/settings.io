@@ -1,0 +1,321 @@
+.settings-container {
+  padding: 1.5rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.settings-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.settings-header {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.settings-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.settings-content {
+  padding: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+/* New Activity Section */
+.new-activity-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.new-activity-form {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group:first-child {
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  width: 100%;
+}
+
+.form-group select {
+  width: 4rem;
+  padding: 0.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-button:hover {
+  background-color: #1d4ed8;
+}
+
+.add-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* Existing Activities */
+.existing-activities {
+  margin-bottom: 1.5rem;
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+}
+
+.activity-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.color-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+}
+
+.activity-name {
+  font-weight: 500;
+}
+
+.activity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.delete-button {
+  padding: 0.25rem;
+  color: #6b7280;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.delete-button:hover {
+  color: #dc2626;
+}
+
+/* Duration Section */
+.duration-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.duration-help {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.duration-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duration-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.duration-button:hover:not(.disabled) {
+  background-color: #e5e7eb;
+}
+
+.duration-button.selected {
+  background-color: #2563eb;
+  color: white;
+}
+
+.duration-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Save Button */
+.save-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Success Alert */
+.success-alert {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.375rem;
+  color: #166534;
+}
+
+/* Lines to add/modify in SettingsScreen.css */
+
+/* Update container width for mobile */
+.settings-container {
+  padding: 1rem;               /* Changed from 1.5rem */
+  max-width: 42rem;
+  margin: 0 auto;
+  width: 100%;                 /* Added */
+}
+
+/* Make the new activity form responsive */
+@media (max-width: 640px) {
+  .new-activity-form {
+    flex-direction: column;    /* Changed from flex */
+    gap: 1rem;
+  }
+  
+  .form-group {
+    width: 100%;              /* Added */
+  }
+  
+  .form-group select {
+    width: 100%;              /* Changed from 4rem */
+  }
+
+  .add-button {
+    width: 100%;              /* Added */
+  }
+}
+
+/* Make duration buttons wrap on mobile */
+@media (max-width: 640px) {
+  .duration-buttons {
+    display: grid;            /* Changed from flex */
+    grid-template-columns: repeat(4, 1fr); /* Added */
+    gap: 0.5rem;             /* Added */
+    padding: 0.5rem;         /* Added */
+  }
+
+  .duration-button {
+    width: 100%;             /* Added */
+    padding: 0.75rem 0.5rem; /* Changed from 0.5rem 1rem */
+    font-size: 0.875rem;     /* Added */
+  }
+}
+
+/* Adjust activity items for mobile */
+@media (max-width: 640px) {
+  .activity-item {
+    flex-direction: column;   /* Changed from flex */
+    gap: 1rem;               /* Added */
+    align-items: stretch;     /* Changed from center */
+  }
+
+  .activity-controls {
+    justify-content: space-between; /* Added */
+    width: 100%;             /* Added */
+  }
+
+  .activity-controls select {
+    width: 80%;              /* Added */
+  }
+}
+
+/* Make buttons more touch-friendly */
+@media (max-width: 640px) {
+  .delete-button,
+  .add-button,
+  .save-button {
+    min-height: 44px;        /* Added */
+    padding: 0.75rem;        /* Changed from varying values */
+  }
+
+  .duration-button {
+    min-height: 44px;        /* Added */
+  }
+}
+
+/* Adjust text sizes for mobile */
+@media (max-width: 640px) {
+  .settings-title {
+    font-size: 1.25rem;      /* Changed from 1.5rem */
+  }
+
+  .section-title {
+    font-size: 1rem;         /* Changed from 1.125rem */
+  }
+
+  .duration-help {
+    font-size: 0.8125rem;    /* Changed from 0.875rem */
+  }
+}
