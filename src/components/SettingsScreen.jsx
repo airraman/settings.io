@@ -15,7 +15,7 @@ const SettingsScreen = () => {
   const [selectedDurations, setSelectedDurations] = useState([]);
 
   const colorPalette = [
-    '#c8b2d6', '#f1dbbc', '#bcd2f1', '#d6b2c8', 
+    '#c8b2d6', '#f1dbbc', '#bcd2f1', '#d6b2c8',
     '#b2d6c8', '#dbbcf1', '#bcf1db', '#f1bcdb'
   ];
 
@@ -37,7 +37,7 @@ const SettingsScreen = () => {
   };
 
   const handleUpdateColor = (id, newColor) => {
-    setActivities(activities.map(activity => 
+    setActivities(activities.map(activity =>
       activity.id === id ? { ...activity, color: newColor } : activity
     ));
   };
@@ -132,43 +132,34 @@ const SettingsScreen = () => {
               {activities.map((activity) => (
                 <div key={activity.id} className="activity-item">
                   <div className="activity-info">
-                    <div
-                      className="color-dot"
-                      style={{ backgroundColor: activity.color }}
-                    />
+                    <div className="color-dot" style={{ backgroundColor: activity.color }} />
                     <span className="activity-name">{activity.name}</span>
                   </div>
                   <div className="activity-controls">
-                    <select
-                      value={activity.color}
-                      onChange={(e) => handleUpdateColor(activity.id, e.target.value)}
-                      className="color-select"
-                      style={{ backgroundColor: activity.color }}
-                      aria-label="Select color"
-                    >
-                      {colorPalette.map((color) => (
-                        <option 
-                          key={color} 
-                          value={color} 
-                          style={{ backgroundColor: color }}
-                        >
-                          {'\u00A0'}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      className="delete-button"
-                      onClick={() => handleDeleteActivity(activity.id)}
-                      aria-label="Delete activity"
-                    >
-                      <X size={20} />
-                    </button>
+                    <div className="color-select-wrapper">
+                      <select
+                        value={activity.color}
+                        onChange={(e) => handleUpdateColor(activity.id, e.target.value)}
+                        className="color-select"
+                        style={{ backgroundColor: activity.color }}
+                        aria-label="Select color"
+                      >
+                        {colorPalette.map((color) => (
+                          <option
+                            key={color}
+                            value={color}
+                            style={{ backgroundColor: color }}
+                          >
+                            {'\u00A0'}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </section>
-
           <section className="duration-section">
             <h2 className="section-title">Session Lengths</h2>
             <p className="duration-help">
@@ -179,9 +170,8 @@ const SettingsScreen = () => {
                 <button
                   key={duration}
                   onClick={() => handleDurationClick(duration)}
-                  className={`duration-button ${
-                    selectedDurations.includes(duration) ? 'selected' : ''
-                  }`}
+                  className={`duration-button ${selectedDurations.includes(duration) ? 'selected' : ''
+                    }`}
                   disabled={selectedDurations.length === 3 && !selectedDurations.includes(duration)}
                   aria-pressed={selectedDurations.includes(duration)}
                 >
@@ -191,8 +181,8 @@ const SettingsScreen = () => {
             </div>
           </section>
 
-          <button 
-            className="save-button" 
+          <button
+            className="save-button"
             onClick={handleSaveSettings}
             disabled={selectedDurations.length !== 3}
           >
